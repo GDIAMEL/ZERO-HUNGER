@@ -1165,6 +1165,7 @@
             document.getElementById('region-select').addEventListener('change', function(e) {
                 app.selectedRegion = e.target.value;
                 document.getElementById('selected-region').textContent = e.target.value;
+                updateWeatherDetails(app.selectedRegion); // <-- Add this line
             });
 
             // Prediction button
@@ -1507,6 +1508,28 @@
                 `;
                 document.getElementById('selected-region').textContent = region.name;
                 document.getElementById('region-select').value = region.name;
+                updateWeatherDetails(region.name); // <-- Add this line
+            }
+        }
+
+        async function updateWeatherDetails(region) {
+            try {
+                const response = await fetch(`http://localhost:3001/api/weather?location=${encodeURIComponent(region)}`);
+                const data = await response.json();
+
+                if (!data.current) throw new Error('Weather data unavailable');
+
+                document.getElementById('temperature').textContent = data.current.temperature + '°C';
+                document.getElementById('humidity').textContent = data.current.humidity + '%';
+                document.getElementById('wind-speed').textContent = data.current.wind_speed + ' km/h';
+                document.getElementById('rainfall').textContent = (data.current.precip || 0) + 'mm';
+                document.getElementById('conditions').textContent = data.current.weather_descriptions[0] || 'N/A';
+            } catch (err) {
+                document.getElementById('temperature').textContent = 'N/A';
+                document.getElementById('humidity').textContent = 'N/A';
+                document.getElementById('wind-speed').textContent = 'N/A';
+                document.getElementById('rainfall').textContent = 'N/A';
+                document.getElementById('conditions').textContent = 'N/A';
             }
         }
 
