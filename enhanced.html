@@ -6,6 +6,8 @@
     <title>AgriPredict AI - Smart Farming Solutions</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
         * {
             margin: 0;
@@ -675,42 +677,108 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1rem;
+            }
             .main-grid {
                 grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
-            
-            .chatbot-panel {
-                position: relative;
-                height: 500px;
+            .left-column, .middle-column, .right-column {
+                width: 100%;
+                min-width: 0;
             }
-        }
-
-        @media (max-width: 768px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .charts-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
+            .chatbot-panel {
+                position: relative;
+                height: 400px;
+                top: 0;
+                width: 100%;
+                min-width: 0;
             }
-            
-            .header-content {
-                flex-direction: column;
+            #map {
+                height: 400px;
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
-            .header-info {
-                justify-content: center;
+            .left-column, .middle-column, .right-column {
+                width: 100%;
+                min-width: 0;
             }
-
             .chatbot-panel {
-                height: 400px;
+                width: 100%;
+                min-width: 0;
+                height: 300px;
             }
+            #map {
+                height: 300px;
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0.5rem;
+            }
+            .header-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .left-column, .middle-column, .right-column {
+                width: 100%;
+                min-width: 0;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .chatbot-panel {
+                height: 250px;
+                min-height: 200px;
+                width: 100%;
+                min-width: 0;
+            }
+            #map {
+                height: 200px;
+                width: 100%;
+                min-width: 0;
+            }
+            .prediction-panel, .notifications-panel, .results-panel, .chart-panel {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Ensure map always fills its container */
+        #map {
+            width: 100%;
+            min-width: 0;
+            min-height: 200px;
+            max-height: 500px;
+            height: 500px;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: height 0.3s;
         }
     </style>
 </head>
@@ -923,6 +991,16 @@
                         </div>
                     </div>
 
+                    <!-- Map Panel (moved here) -->
+                    <div id="map-panel" class="prediction-panel" style="margin-bottom:2rem;">
+                        <h2 class="panel-title">
+                            <i class="fas fa-map" style="color:#16a34a;"></i>
+                            Select Location on Map
+                        </h2>
+                        <div id="map" style="height:500px; border-radius:0.75rem; margin-bottom:1rem;"></div>
+                        <div id="map-info"></div>
+                    </div>
+
                     <!-- Charts -->
                     <div class="charts-grid">
                         <div class="chart-panel">
@@ -1074,6 +1152,7 @@
             initializeEventListeners();
             initializeCharts();
             initializeChatbot();
+            initializeMap(); // <-- Add this line
         }
 
         function initializeEventListeners() {
@@ -1377,6 +1456,57 @@
                 document.getElementById('email').value = '';
                 document.getElementById('password').value = '';
                 document.getElementById('results-panel').classList.add('hidden');
+            }
+        }
+
+        // Initialize map
+        function initializeMap() {
+            // Centered on Kenya
+            const map = L.map('map').setView([-0.0236, 37.9062], 6);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Example regions (simplified polygons)
+            const regions = [
+                {
+                    name: 'Central Kenya',
+                    crop: 'Maize, Coffee',
+                    conditions: 'Partly Cloudy, Good rainfall',
+                    polygon: [[-0.5, 36.8], [0.5, 36.8], [0.5, 37.5], [-0.5, 37.5]]
+                },
+                {
+                    name: 'Western Kenya',
+                    crop: 'Beans, Maize',
+                    conditions: 'Humid, High rainfall',
+                    polygon: [[0.2, 34.5], [1.2, 34.5], [1.2, 35.5], [0.2, 35.5]]
+                },
+                {
+                    name: 'Rift Valley',
+                    crop: 'Wheat, Maize',
+                    conditions: 'Cool, Moderate rainfall',
+                    polygon: [[-1, 35.5], [0, 35.5], [0, 36.5], [-1, 36.5]]
+                }
+                // Add more regions as needed
+            ];
+
+            regions.forEach(region => {
+                const poly = L.polygon(region.polygon, {color: '#16a34a', weight: 2, fillOpacity: 0.2})
+                    .addTo(map)
+                    .on('click', function() {
+                        showMapInfo(region);
+                    });
+            });
+
+            function showMapInfo(region) {
+                document.getElementById('map-info').innerHTML = `
+                    <strong>Region:</strong> ${region.name}<br>
+                    <strong>Conditions:</strong> ${region.conditions}<br>
+                    <strong>Recommended Crops:</strong> ${region.crop}
+                `;
+                document.getElementById('selected-region').textContent = region.name;
+                document.getElementById('region-select').value = region.name;
             }
         }
 
