@@ -27,15 +27,22 @@ AgriPredict AI is a next-generation web application designed to empower farmers 
 
 ## Technologies Used
 
-- **Frontend:**  
-  - HTML5, CSS3 (custom styles, responsive layouts)
-  - [Font Awesome](https://fontawesome.com/) for icons
-  - [Chart.js](https://www.chartjs.org/) for dynamic charts
-  - [Leaflet.js](https://leafletjs.com/) for interactive maps
+### Frontend
 
-- **Planned Integrations:**  
-  - Backend API for user authentication and data storage
-  - Real weather and AI prediction APIs (to be integrated)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Font Awesome](https://img.shields.io/badge/Font%20Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
+![Leaflet.js](https://img.shields.io/badge/Leaflet.js-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+
+---
+
+### Backend Integrations
+
+![Backend API](https://img.shields.io/badge/Backend%20API-Flask%20%7C%20Node.js-grey?style=for-the-badge&logo=api&logoColor=white)
+![Weather API](https://img.shields.io/badge/Weather%20API-OpenWeatherMap-1E90FF?style=for-the-badge&logo=openweathermap&logoColor=white)
+![AI/ML Model](https://img.shields.io/badge/AI%20Model-Python%20%7C%20scikit--learn-FF5733?style=for-the-badge&logo=python&logoColor=white)
+
 
 ## Getting Started
 
