@@ -72,7 +72,7 @@ AgriPredict AI is a next-generation web application designed to empower farmers 
 
 ## Screenshots
 
-![Dashboard Overview](AGRI AI.PNG)
+![Dashboard Overview](<img width="1350" height="648" alt="Image" src="https://github.com/user-attachments/assets/1aaf8643-6c82-4bd6-a387-8a8964a79f1a" />)
 
 ## Roadmap
 
