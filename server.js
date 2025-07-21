@@ -12,7 +12,7 @@ const app = express();
 // Environment variables with validation
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET || (() => {
-    console.warn('⚠️  Using default JWT_SECRET. Set JWT_SECRET in production!');
+    console.warn('Using default JWT_SECRET. Set JWT_SECRET in production!');
     return 'supersecretkey';
 })();
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -174,11 +174,11 @@ app.post('/api/login', [
     try {
         const { email, password } = req.body;
         
-        console.log(`🔐 Login attempt for: ${email}`);
+        console.log(`Login attempt for: ${email}`);
         
         const user = users.find(u => u.email === email);
         if (!user) {
-            console.log(`❌ User not found: ${email}`);
+            console.log(`User not found: ${email}`);
             return res.status(401).json({ 
                 error: 'Invalid credentials',
                 message: 'Email or password is incorrect'
@@ -187,7 +187,7 @@ app.post('/api/login', [
 
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-            console.log(`❌ Invalid password for: ${email}`);
+            console.log(`Invalid password for: ${email}`);
             return res.status(401).json({ 
                 error: 'Invalid credentials',
                 message: 'Email or password is incorrect'
@@ -205,7 +205,7 @@ app.post('/api/login', [
             { expiresIn: '24h' }
         );
 
-        console.log(`✅ Login successful for: ${email}`);
+        console.log(`Login successful for: ${email}`);
         
         res.json({
             success: true,
@@ -220,7 +220,7 @@ app.post('/api/login', [
         });
 
     } catch (error) {
-        console.error('❌ Login error:', error);
+        console.error('Login error:', error);
         res.status(500).json({ 
             error: 'Login failed',
             message: 'Internal server error'
@@ -230,7 +230,7 @@ app.post('/api/login', [
 
 app.post('/api/logout', authenticateToken, (req, res) => {
     // In a real app, you'd blacklist the token or use Redis
-    console.log(`👋 User logged out: ${req.user.email}`);
+    console.log(`User logged out: ${req.user.email}`);
     res.json({ 
         success: true,
         message: 'Logged out successfully' 
@@ -242,7 +242,7 @@ app.post('/api/reset-password', [
     handleValidationErrors
 ], (req, res) => {
     const { email } = req.body;
-    console.log(`🔄 Password reset requested for: ${email}`);
+    console.log(`Password reset requested for: ${email}`);
     
     // In production: generate reset token, send email, store in DB
     res.json({ 
@@ -259,7 +259,7 @@ app.get('/api/weather', [
 ], (req, res) => {
     const { location } = req.query;
     
-    console.log(`🌤️  Weather requested for: ${location}`);
+    console.log(`Weather requested for: ${location}`);
     
     // Enhanced weather data with more realistic variations
     const weatherData = {
@@ -335,7 +335,7 @@ app.post('/api/predict', [
 ], (req, res) => {
     const { crop, region } = req.body;
     
-    console.log(`🌾 Prediction requested - Crop: ${crop}, Region: ${region}, User: ${req.user.email}`);
+    console.log(`Prediction requested - Crop: ${crop}, Region: ${region}, User: ${req.user.email}`);
     
     // Enhanced prediction with crop-specific data
     const cropMultipliers = {
@@ -407,7 +407,7 @@ app.post('/api/chat', [
     const { message } = req.body;
     const lower = message.toLowerCase();
     
-    console.log(`💬 Chat message from ${req.user.email}: ${message.substring(0, 50)}...`);
+    console.log(`Chat message from ${req.user.email}: ${message.substring(0, 50)}...`);
 
     // Enhanced chatbot responses with context
     let response = "I'm here to help with your farming questions. Could you be more specific about what you'd like to know?";
@@ -450,7 +450,7 @@ app.post('/api/chat', [
 
 // --- Notifications API ---
 app.get('/api/notifications', authenticateToken, (req, res) => {
-    console.log(`🔔 Notifications requested by: ${req.user.email}`);
+    console.log(`Notifications requested by: ${req.user.email}`);
     
     res.json({
         success: true,
@@ -467,7 +467,7 @@ app.get('/api/notifications', authenticateToken, (req, res) => {
 app.get('/api/yield-history', authenticateToken, (req, res) => {
     const { crop, years } = req.query;
     
-    console.log(`📊 Yield history requested by: ${req.user.email}`);
+    console.log(`Yield history requested by: ${req.user.email}`);
     
     const yieldData = [
         { year: '2020', predicted: 2.1, actual: 1.9, crop: 'Maize', accuracy: 90.5 },
@@ -490,7 +490,7 @@ app.get('/api/yield-history', authenticateToken, (req, res) => {
 app.get('/api/weather-history', authenticateToken, (req, res) => {
     const { region, year } = req.query;
     
-    console.log(`🌤️  Weather history requested by: ${req.user.email}`);
+    console.log(`Weather history requested by: ${req.user.email}`);
     
     const weatherHistory = [
         { month: 'Jan', rainfall: 45, temperature: 28, humidity: 65 },
@@ -561,7 +561,7 @@ app.use('*', (req, res) => {
 
 // --- Global Error Handler ---
 app.use((error, req, res, next) => {
-    console.error('❌ Unhandled error:', error);
+    console.error('Unhandled error:', error);
     
     res.status(500).json({
         error: 'Internal server error',
@@ -572,29 +572,29 @@ app.use((error, req, res, next) => {
 
 // --- Graceful Shutdown ---
 process.on('SIGTERM', () => {
-    console.log('🛑 SIGTERM received, shutting down gracefully');
+    console.log('SIGTERM received, shutting down gracefully');
     process.exit(0);
 });
 
 process.on('SIGINT', () => {
-    console.log('🛑 SIGINT received, shutting down gracefully');
+    console.log('SIGINT received, shutting down gracefully');
     process.exit(0);
 });
 
 // --- Start Server ---
 const server = app.listen(PORT, () => {
-    console.log(`🚀 AgriPredict AI backend running on http://localhost:${PORT}`);
-    console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-    console.log(`🔐 Login endpoint: POST http://localhost:${PORT}/api/login`);
-    console.log(`📊 API Documentation available at endpoints`);
-    console.log(`🌍 Environment: ${NODE_ENV}`);
+    console.log(`AgriPredict AI backend running on http://localhost:${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log(`Login endpoint: POST http://localhost:${PORT}/api/login`);
+    console.log(`API Documentation available at endpoints`);
+    console.log(`Environment: ${NODE_ENV}`);
 });
 
 server.on('error', (error) => {
     if (error.code === 'EADDRINUSE') {
-        console.error(`❌ Port ${PORT} is already in use`);
+        console.error(`Port ${PORT} is already in use`);
     } else {
-        console.error('❌ Server error:', error);
+        console.error('Server error:', error);
     }
     process.exit(1);
 });
