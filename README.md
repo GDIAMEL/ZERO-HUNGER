@@ -76,11 +76,11 @@ AgriPredict AI is a next-generation web application designed to empower farmers 
 
 ## Roadmap
 
-- Integrate backend API for authentication and persistent data
-- Connect to real-time weather and prediction APIs
-- Expand crop and region database
-- Localize for multiple languages
-- Add farmer community and forum features
+- Integrate backend API for authentication and persistent data.
+- Connect to real-time weather and prediction APIs.
+- Expand crop and region database.
+- Localize for multiple languages.
+- Add farmer community and forum features.
 
 ## Contributing
 
