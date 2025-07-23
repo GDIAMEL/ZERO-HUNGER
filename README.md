@@ -9,6 +9,7 @@ AgriPredict AI is an integrated web and AI platform designed to empower smallhol
 - [Features](#features)
 - [Architecture & Key Files](#architecture--key-files)
 - [Technologies Used](#technologies-used)
+- [Backend & Models](#backend--models)
 - [Getting Started](#getting-started)
 - [Screenshots](#screenshots)
 - [Roadmap](#roadmap)
