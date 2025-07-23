@@ -538,7 +538,7 @@ app.get('/api/profile', authenticateToken, (req, res) => {
 });
 
 // --- 404 Handler ---
-app.use('*', (req, res) => {
+app.use((req, res) => {
     res.status(404).json({
         error: 'Endpoint not found',
         message: `${req.method} ${req.originalUrl} is not a valid endpoint`,
