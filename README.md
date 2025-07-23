@@ -22,7 +22,7 @@ AgriPredict AI is an integrated web and AI platform designed to empower smallhol
 ## Features
 
 - **AI-Powered Yield Prediction:**  
-  Predict crop yields based on real farm data (soil, nutrients, weather, etc.) using a custom AI model ([CropYieldPredictor.jsx](#cropyieldpredictorjsx), [CROP_YIELD_PREDICTOR (1).ipynb](#crop_yield_predictor-1ipynb)).
+  Predict crop yields based on real farm data (soil, nutrients, weather, etc.) using a custom AI model ([CropYieldPredictor.jsx](#cropyieldpredictorjsx), [CROP_YIELD_PREDICTOR.ipynb](#crop_yield_predictor-ipynb)).
 - **Weather Dashboard:**  
   Real-time weather cards display temperature, humidity, wind speed, rainfall, and conditions for your selected region.
 - **Interactive Map:**  
@@ -48,7 +48,7 @@ AgriPredict AI is an integrated web and AI platform designed to empower smallhol
 - **[CropYieldPredictor.jsx](CropYieldPredictor.jsx):**  
   Modern React component implementing an interactive, AI-based crop yield predictor. Allows input of farm and crop details, returns predictions, risks, recommendations, and visualizes weather and historical yield data.
 
-- **[CROP_YIELD_PREDICTOR (1).ipynb](CROP_YIELD_PREDICTOR%20(1).ipynb):**  
+- **[CROP_YIELD_PREDICTOR (1).ipynb](CROP_YIELD_PREDICTOR%20.ipynb):**  
   Python Jupyter Notebook outlining the AI/ML model logic for crop yield prediction, referencing feature engineering, risk assessment, and recommendations (original research/prototype).
 
 - **[PANDAS_PROFILING_REPORT.html](PANDAS_PROFILING_REPORT.html):**  
