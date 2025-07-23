@@ -2,6 +2,8 @@
 
 AgriPredict AI is an integrated web and AI platform designed to empower smallholder farmers and agricultural stakeholders with smart, data-driven tools for yield prediction, weather monitoring, farm analytics, and actionable recommendations. The project harnesses modern web technologies and machine learning to provide an intuitive dashboard, interactive map, chatbot assistant, and advanced crop yield prediction models for sustainable agriculture and food security.
 
+[AGRI PREDICT WEBSITE](https://gdiamel.github.io/ZERO-HUNGER/)
+
 ---
 
 ## Table of Contents
